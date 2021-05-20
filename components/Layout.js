@@ -2,14 +2,14 @@ import Head from "next/head";
 
 export default function Layout({ children, title = "Default title" }) {
   return (
-    <div className="flex justify-center items-center flex-col min-h-screen text-white font-mono bg-gray-800">
+    <div className="flex flex-col items-center justify-center min-h-screen font-mono text-white bg-gray-800">
       <Head>
         <title>{title}</title>
       </Head>
-      <main className="flex flex-1 justify-center items-center w-screen flex-col">
+      <main className="flex flex-col items-center justify-center flex-1 w-screen">
         {children}
       </main>
-      <footer className="w-full flex justify-center items-center text-gray-500 text-sm">
+      <footer className="flex items-center justify-center w-full text-sm text-gray-500">
         © 2021 nazeudon
       </footer>
     </div>
