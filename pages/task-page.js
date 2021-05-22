@@ -1,9 +1,31 @@
-import Layout from "../components/Layout";
+import { useEffect } from "react";
 import Link from "next/link";
+import useSWR from "swr";
+import { getAllTasksData } from "../lib/tasks";
+import Layout from "../components/Layout";
+import Task from "../components/Task";
 
-export default function TaskPage() {
+const fetcher = (url) => fetch(url).then((res) => res.json());
+const apiURL = `${process.env.NEXT_PUBLIC_RESTAPI_URL}api/list-task/`;
+
+export default function TaskPage({ staticfilteredTasks }) {
+  const { data: tasks, mutate } = useSWR(apiURL, fetcher, {
+    initialData: staticfilteredTasks,
+  });
+  const filteredTasks = tasks?.sort(
+    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+  );
+
+  useEffect(() => {
+    mutate();
+  }, []);
+
   return (
     <Layout title="Task page">
+      <ul>
+        {filteredTasks &&
+          filteredTasks.map((task) => <Task key={task.id} task={task} />)}
+      </ul>
       <Link href="/main-page">
         <div className="flex mt-12 cursor-pointer">
           <svg
@@ -25,4 +47,13 @@ export default function TaskPage() {
       </Link>
     </Layout>
   );
+}
+
+export async function getStaticProps() {
+  const staticfilteredTasks = await getAllTasksData();
+
+  return {
+    props: { staticfilteredTasks },
+    revalidate: 3,
+  };
 }
