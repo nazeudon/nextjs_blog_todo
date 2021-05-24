@@ -1,5 +1,11 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## About This App
+
+This is my first application to learn SSG, ISR and CSR.
+
+Once you create a user and login, you can actually add, edit, and delete ToDos from the task page on the right side of the main page. The database is created using Django in Python and deployed on [Heroku](https://nextjs-django.herokuapp.com/).
+
 ## Getting Started
 
 First, run the development server:
